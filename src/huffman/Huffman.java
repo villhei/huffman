@@ -4,16 +4,18 @@
  */
 package huffman;
 
+import java.io.File;
+import java.util.Scanner;
+
 /**
  *
  * @author Ville Heikkinen
  */
 public class Huffman {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+
+        HuffmanCompressor hc = new HuffmanCompressor("inputs/testfile");
+        hc.createHuffmanTree();
     }
 }
