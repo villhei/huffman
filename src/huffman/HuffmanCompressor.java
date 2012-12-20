@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 /**
@@ -21,6 +22,7 @@ public class HuffmanCompressor {
 
     final private int ALPHABET_SIZE = 256;
     private int[] frequencies;
+    private PriorityQueue<Node> heap;
     private FileInputStream inputstream;
     private BufferedReader buffer;
     private File inputfile;
@@ -30,8 +32,6 @@ public class HuffmanCompressor {
         inputfile = new File(filepath);
         try {
             inputstream = new FileInputStream(inputfile);
-            ioreader = new InputStreamReader(inputstream);
-            buffer = new BufferedReader(ioreader);
         } catch (FileNotFoundException e) {
             System.out.println("File not found! " + e);
             System.exit(1);
@@ -41,20 +41,30 @@ public class HuffmanCompressor {
     void createHuffmanTree() {
         try {
             readFrequenciesFromFile();
+            //printFrequencies();
+            constructHeap();
         } catch (IOException e) {
             System.out.println(e);
             System.exit(1);
         }
     }
 
-    private void constructQueue() {
-        
+    private void constructHeap() {
+        heap = new PriorityQueue<>();
+        for (int i = 0; i < frequencies.length; i++) {
+            if (frequencies[i] == 0) {
+                continue;
+            }
+            heap.add(new Node((char) i, frequencies[i]));
+        }
+        System.out.println(heap);
+        System.out.println(heap.size());
     }
 
     private void readFrequenciesFromFile() throws IOException {
-        int input = 0;
+        int input;
         frequencies = new int[ALPHABET_SIZE];
-        while ((input = buffer.read()) != -1) {
+        while ((input = inputstream.read()) != -1) {
             frequencies[input]++;
         }
     }

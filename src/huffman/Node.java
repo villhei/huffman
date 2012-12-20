@@ -12,10 +12,15 @@ public class Node implements Comparable<Node>{
 
     private char value;
     private int frequency;
+    public Node left;
+    public Node right;
+    public Node parent;
 
-    public Node(char value) {
+    public Node(char value, int frequency) {
         this.value = value;
-        this.frequency = 1;
+        this.frequency = frequency;
+        this.left = null;
+        this.right = null;
     }
 
     public void incrementFrequency() {
@@ -28,6 +33,11 @@ public class Node implements Comparable<Node>{
     
     public char getValue() {
         return this.value;
+    }
+    
+    @Override
+    public String toString() {
+        return this.value + " : " + this.frequency;
     }
 
     @Override
