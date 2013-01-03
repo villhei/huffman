@@ -20,8 +20,9 @@ import java.util.Scanner;
  */
 public class HuffmanCompressor {
 
-    final private int ALPHABET_SIZE = 256;
+    private final int ALPHABET_SIZE = 256;
     private int[] frequencies;
+    private String[] codewords;
     private PriorityQueue<Node> heap;
     private FileInputStream inputstream;
     private BufferedReader buffer;
@@ -38,7 +39,7 @@ public class HuffmanCompressor {
         }
     }
 
-    void createHuffmanTree() {
+    public void createHuffmanTree() {
         try {
             readFrequenciesFromFile();
             //printFrequencies();
@@ -47,6 +48,11 @@ public class HuffmanCompressor {
             System.out.println(e);
             System.exit(1);
         }
+        buildTreeFromHeap();
+        createCodeWords();
+    }
+
+    public void writeFile(String filename) {
     }
 
     private void constructHeap() {
@@ -76,5 +82,36 @@ public class HuffmanCompressor {
                 System.out.println((char) i + " : " + frequencies[i]);
             }
         }
+    }
+
+    private void buildTreeFromHeap() {
+        while (heap.size() >= 2) {
+            Node newnode = new Node(null, null);
+            newnode.left = heap.remove();
+            newnode.right = heap.remove();
+            newnode.frequency = newnode.left.frequency + newnode.right.frequency;
+            heap.add(newnode);
+        }
+    }
+
+    private void createCodeWords() {
+        codewords = new String[ALPHABET_SIZE];
+        Node tree = heap.remove();
+        treeWalk(tree, null);
+    }
+
+    private void treeWalk(Node node, String code) {
+        if (node == null) {
+            return;
+        }
+        if (code == null) {
+            code = "";
+        }
+        if (node.value != null) {
+            codewords[(int) node.value] = code;
+            return;
+        }
+        treeWalk(node.left, code + '0');
+        treeWalk(node.right, code + '1');
     }
 }
