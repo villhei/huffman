@@ -17,7 +17,8 @@ public class Huffman {
 
         HuffmanCompressor hc = new HuffmanCompressor("inputs/testfile");
         hc.createHuffmanTree();
-        HuffmanCompressor hc2 = new HuffmanCompressor("inputs/ViestiprotokollaPalvelin.jar");
-        hc2.createHuffmanTree();
+        hc.writeFile();
+    //    HuffmanCompressor hc2 = new HuffmanCompressor("inputs/ViestiprotokollaPalvelin.jar");
+   //     hc2.createHuffmanTree();
     }
 }

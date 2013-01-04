@@ -5,9 +5,11 @@
 package huffman;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -25,17 +27,17 @@ public class HuffmanCompressor {
     private String[] codewords;
     private PriorityQueue<Node> heap;
     private FileInputStream inputstream;
-    private BufferedReader buffer;
+    private FileOutputStream outputbuffer;
     private File inputfile;
-    private InputStreamReader ioreader;
+    private File outputfile;
+    private final String outFileExtension = ".huff";
 
     public HuffmanCompressor(String filepath) {
         inputfile = new File(filepath);
         try {
             inputstream = new FileInputStream(inputfile);
         } catch (FileNotFoundException e) {
-            System.out.println("File not found! " + e);
-            System.exit(1);
+            handleFileError(e);
         }
     }
 
@@ -52,7 +54,36 @@ public class HuffmanCompressor {
         createCodeWords();
     }
 
-    public void writeFile(String filename) {
+    private void handleFileError(FileNotFoundException e) {
+        System.out.println("File not found! " + e);
+        System.exit(1);
+    }
+
+    public void writeFile() {
+        try {
+            inputstream = new FileInputStream(inputfile);
+        } catch (FileNotFoundException e) {
+            handleFileError(e);
+        }
+        initOutputFile();
+        writeCodeWordHeader();
+
+        int input;
+    }
+
+    private void initOutputFile() {
+        outputfile = new File(inputfile + outFileExtension);
+        try {
+            outputfile.createNewFile();
+        } catch (IOException e) {
+            System.out.println("File write error! " + e);
+            System.exit(1);
+        }
+    }
+
+    private void writeCodeWordHeader() {
+        File
+        
     }
 
     private void constructHeap() {
