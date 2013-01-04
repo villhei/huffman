@@ -82,7 +82,6 @@ public class HuffmanCompressor {
     }
 
     private void writeCodeWordHeader() {
-        File
         
     }
 
